@@ -1,6 +1,8 @@
 import React from 'react'
-import { taskType } from '../../App';
+import { taskType } from '../owner_todo';
 import { Button, Grid, TextField, Chip } from '@mui/material';
+import { useSelector } from "react-redux";
+import { RootState } from '../../store/store';
 
 interface Props {
     saveTask(): void;
@@ -10,7 +12,10 @@ interface Props {
     deleteAll(): void
 }
 
-const TodoHeader:React.FC<Props> = ({saveTask, setTask, task, listLength, deleteAll}) => {
+const OwnerTodoHeader:React.FC<Props> = ({saveTask, setTask, task, listLength, deleteAll}) => {
+
+
+    const userEmail = useSelector((state: RootState) => state.auth.email) 
 
     function clickHandler(){
         if(task){
@@ -24,11 +29,17 @@ const TodoHeader:React.FC<Props> = ({saveTask, setTask, task, listLength, delete
         if(task){
             const newTask = {...task}
             newTask.text = text
+            newTask.time = new Date().getTime()
             setTask(newTask)
         }else{
             const newTask: taskType = {
                 id: Math.floor(Math.random() * Number.MAX_SAFE_INTEGER),
-                text
+                text,
+                userEmail,
+                checked: false,
+                visible: true,
+                time: new Date().getTime(),
+                liked: []
               }
             setTask(newTask)
         }
@@ -75,4 +86,4 @@ const TodoHeader:React.FC<Props> = ({saveTask, setTask, task, listLength, delete
     ) 
 }
 
-export default TodoHeader
+export default OwnerTodoHeader
