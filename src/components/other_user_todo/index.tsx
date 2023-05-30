@@ -72,9 +72,9 @@ const OtherTodoList:React.FC<Props> = ({user}) => {
           flex: 1,
           backgroundColor: 'rgb(255, 255, 255)',
           border: 'solid 3px #9c27b0',
-          margin: '0 20px 0 0',
           padding: '20px',
           borderRadius: 2,
+          maxWidth: '500px',
           height: '400px',
           overflowY: 'auto'
         }}

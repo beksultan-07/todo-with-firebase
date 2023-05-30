@@ -1,6 +1,6 @@
 import React from 'react'
 import OwnerTodo, { likedTask } from '../../components/owner_todo'
-import { Grid } from '@mui/material';
+import { Container, Grid } from '@mui/material';
 import Users from '../../components/users';
 import Header from '../../components/header';
 import OtherTodoList from '../../components/other_user_todo';
@@ -47,23 +47,38 @@ const Home:React.FC = () => {
   
 
   return (
-    <>
+    <Container>
       <Header/>
       <Grid 
         container
-        justifyContent='space-between'
-        alignItems='flex-start'
+        width='100%'
+        height='100%'
+        justifyContent={{
+          xs: 'space-between',
+          md: 'space-around'
+        }}
+        alignItems={{
+          xs: 'center',
+          md: 'flex-start'
+        }}
         margin='100px 0'
+        flexDirection={{
+          xs: 'column',
+          md: 'row'
+        }}
+        spacing={4}
       >
-        {owner ? 
-          <OwnerTodo likedTasks={likedTasks}/> : 
-          <OtherTodoList user={clickedUser}/>}
-        {liked ?
-          <Users title='Task Liked' users={likedList} back={() => setLiked(false)}/>:
-          <Users title='Other Users' users={usersList} back={() => setLiked(false)}/>
+        {
+          owner ? 
+            <OwnerTodo likedTasks={likedTasks}/> : 
+            <OtherTodoList user={clickedUser}/>}
+        {
+          liked ?
+            <Users title='Task Liked' users={likedList} back={() => setLiked(false)}/>:
+            <Users title='Other Users' users={usersList} back={() => setLiked(false)}/>
         }
       </Grid>
-    </>
+    </Container>
   )
 }
 

@@ -32,6 +32,9 @@ const Users:React.FC<Props> = ({users, title, back}) => {
             border: 'solid 3px #9c27b0',
             padding: '20px',
             borderRadius: 2,
+            margin: {xs: '20px 0 0', md: '0 0 0 20px'},
+            maxWidth: '500px',
+            width: '100%',
             height: '400px',
             overflowY: 'auto'
         }}

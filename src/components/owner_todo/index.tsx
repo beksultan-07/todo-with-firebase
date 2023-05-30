@@ -152,15 +152,16 @@ const OwnerTodo:React.FC<Props> = ({likedTasks}) => {
           flex: 1,
           backgroundColor: 'rgb(255, 255, 255)',
           border: 'solid 3px #9c27b0',
-          margin: '0 20px 0 0',
           padding: '20px',
           borderRadius: 2,
+          width: '100%',
+          maxWidth: '500px',
           height: '400px',
           overflowY: 'auto'
         }}
     >
       <Typography mb={2} variant="h3" lineHeight="lg" textAlign='center'>
-        My to do list
+        My to do
       </Typography>
   
       <OwnerTodoHeader saveTask={saveTask} setTask={setTask} task={task} listLength={todoList?todoList.length: 0} deleteAll={deleteAll}/>
