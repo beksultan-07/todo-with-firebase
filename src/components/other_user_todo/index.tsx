@@ -6,7 +6,7 @@ import FavoriteIcon from '@mui/icons-material/Favorite';
 import { likedTask, taskType } from '../owner_todo';
 import { useSelector, useDispatch } from 'react-redux'
 import { RootState } from '../../store/store';
-import { getDatabase, ref, update, push, remove } from "firebase/database";
+import { getDatabase, ref, push, remove } from "firebase/database";
 import { setUsers } from '../../store/actions/users';
 
 type Props = {
@@ -45,19 +45,53 @@ const OtherTodoList:React.FC<Props> = ({user}) => {
           }
     }
 
+    function deleteLikedTaskFromRedux(taskId: number) {
+        if(user){
+            const newUsers = [...users]
+            const userIndex = users.findIndex(el => el.email === user.email)
+            
+            const userTasks = [...newUsers[userIndex].tasks]
+            const userTaskIndex = userTasks.findIndex(el => el.id === taskId)
+
+            const userTask = {...userTasks[userTaskIndex]}
+            // userTask.liked = [...userTask.liked, likeInfo]
+            userTask.liked = userTask.liked.filter(el => el.hash !== owner?.hash) 
+
+            const newUserTasks = [...userTasks]
+            newUserTasks[userTaskIndex] = userTask
+
+            const newUser = { ...newUsers[userIndex], tasks: newUserTasks }
+
+            newUsers[userIndex] = newUser
+
+            dispatch(setUsers(newUsers))
+          }
+    }
 
     function taskLikeHandler(task: taskType){
         if(owner){
             if(!task.liked.some(el => el.hash === owner?.hash)){
-                const likeInfo = {
+                const likeInfo: likedTask = {
                     name: owner.name,
                     hash: owner.hash ? owner.hash : ''
                 }
                 
                 push(ref(database, `users/${user?.hash}/tasks/${task.hash}/liked`), likeInfo)
-                .then(() => {
+                .then((pushedRef) => {
+                    const pushedKey = pushedRef.key; 
+                    likeInfo.likedHash = pushedRef.key || undefined
                     saveLikedTaskToRedux(task.id, likeInfo)
                     console.log("Data was successfully added to the database");
+                })
+                .catch((error) => {
+                  console.log(error);
+                });
+            }else{
+                const likedHash = task.liked.find(el => el.likedHash === owner?.hash)
+                remove(ref(database, `users/${user?.hash}/tasks/${task.hash}/liked/${likedHash}`))
+                .then(() => {
+                    deleteLikedTaskFromRedux(task.id)
+                    console.log("Data was successfully removed from the database");
                 })
                 .catch((error) => {
                   console.log(error);
