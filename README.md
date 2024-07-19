@@ -1,6 +1,17 @@
-# Getting Started with Create React App
+# Todo App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This is a Todo App that provides user registration and authentication, task creation, editing, deletion, and hiding, as well as the ability to view and like other users' tasks. The project is built using React, Material-UI (MUI), TypeScript, and Firebase.
+
+
+## Features
+  User Registration and Authentication: Allows new users to sign up and log in with their credentials.
+  Add New Todo: Enables users to create new tasks.
+  Delete Todo: Users can delete their tasks.
+  Edit Todo: Users can edit their tasks.
+  Hide Todo from Other Users: Allows users to hide their tasks from other users.
+  View Other Users' Todos: Allows users to view tasks created by other users.
+  Like Other Users' Tasks: Users can like tasks created by other users and view a list of liked tasks.
+
 
 ## Available Scripts
 
